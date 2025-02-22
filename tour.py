@@ -20,13 +20,18 @@ def is_valid(board, new_row, new_col):
 
 def print_board(board):
     """
-    Displays the chess board with move numbers (00-63)
+    Displays the chess board with move numbers
     Parameters:
-        board: 8x8 matrix with move numbers
+        board: NxN matrix with move numbers
     """
+    board_size = len(board)
+    total_squares = board_size * board_size - 1
+    # Calculate number of digits needed for the largest number
+    width = len(str(total_squares))
+    
     for row in board:
-        # Format each number with 2 digits (00-63)
-        print(" ".join(f"{num:02d}" for num in row))
+        # Format each number with consistent width
+        print(" ".join(f"{num:0{width}d}" if num != -1 else "-"*width for num in row))
     print()
 
 def count_onward_moves(board, row, col):
@@ -57,12 +62,15 @@ def find_solutions(board, row, col, counter):
     Parameters:
         board: current board state
         row, col: current position
-        counter: current move number (1-63)
+        counter: current move number
     Returns:
         boolean: True if solution found, False otherwise
     """
+    board_size = len(board)
+    total_squares = board_size * board_size
+    
     # Base case: all squares visited
-    if counter == 64:
+    if counter == total_squares:
         print("Solution found:")
         print_board(board)
         return True
@@ -99,12 +107,15 @@ def find_solutions_no_backtrack(board, row, col, counter):
     Parameters:
         board: current board state
         row, col: current position
-        counter: current move number (1-63)
+        counter: current move number
     Returns:
         boolean: True if solution found, False otherwise
     """
+    board_size = len(board)
+    total_squares = board_size * board_size
+    
     # Base case: all squares visited
-    if counter == 64:
+    if counter == total_squares:
         print("Solution found:")
         print_board(board)
         return True
